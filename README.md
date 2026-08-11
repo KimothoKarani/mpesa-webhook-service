@@ -1,4 +1,4 @@
-Teal boxes are the services you write, purple is infrastructure, gray is event sources. 
+Diagram legend: Teal boxes are services this project implements, purple boxes are infrastructure (Kafka, Redis, Postgres), and gray boxes are external event sources. 
 ![img.png](img.png)
 
 The same thing in Mermaid:
