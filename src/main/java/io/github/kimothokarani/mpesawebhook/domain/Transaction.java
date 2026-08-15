@@ -7,6 +7,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -28,13 +29,13 @@ public class Transaction {
     private BigDecimal amount;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "transaction_type", nullable = false)
+    @Column(name = "transaction_type", nullable = false, length = 20)
     private TransactionType transactionType;
 
     @Column(name = "status", nullable = false, length = 20)
     private String status;
 
-    @Column(name = "bill_ref_number", nullable = false)
+    @Column(name = "bill_ref_number", nullable = false, length = 50)
     private String billRefNumber;
 
     @Column(name = "related_transaction_id")
@@ -96,6 +97,7 @@ public class Transaction {
             String billRefNumber,
             Transaction original
     ) {
+        Objects.requireNonNull(original.getId(), "original transaction must be persisted before reversal");
         Transaction reversal = new Transaction(
                 externalTransactionId, accountId, amount,
                 TransactionType.REVERSAL, billRefNumber, null
